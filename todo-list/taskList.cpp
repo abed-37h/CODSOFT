@@ -1,3 +1,4 @@
+#include <iostream>
 #include "taskList.h"
 
 void taskList::add(task &t) {
@@ -8,6 +9,7 @@ void taskList::viewTaskList(void) const {
     for (auto& [id, t] : this->tasks) {
         t.display();
     }
+    std::cout << "\n";
 }
 
 void taskList::complete(unsigned int taskId) {

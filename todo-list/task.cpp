@@ -3,9 +3,12 @@
 
 unsigned int task::_id = 1;
 
+task::task(void) = default;
+
 task::task(std::string description)
-    : description(description), completed(false) {
-    
+    : description(description), completed(false)
+{
+
     this->id = _id++;
 }
 

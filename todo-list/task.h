@@ -5,6 +5,7 @@
 
 class task {
 public:
+    task(void);
     task(std::string description);
     void complete(void);
     std::string getDescription(void) const;
