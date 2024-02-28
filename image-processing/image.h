@@ -10,6 +10,9 @@ public:
     image(std::string filename);
     bool load(std::string filename);
     void display(void) const;
+    void convert2GrayScale(void);
+    void blur(int d, int sigma = 0);
+    void sharpen(void);
     void save(void);
     bool saveAs(std::string filename);
 

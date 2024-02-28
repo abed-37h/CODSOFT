@@ -19,6 +19,21 @@ void image::display(void) const {
     cv::waitKey(0);
 }
 
+void image::convert2GrayScale(void) {
+    cv::cvtColor(this->imageMat, this->imageMat, cv::COLOR_BGR2GRAY);
+}
+
+void image::blur(int d, int sigma) {
+    cv::GaussianBlur(this->imageMat, this->imageMat, cv::Size(d, d), sigma, sigma);
+}
+
+void image::sharpen(void) {
+    cv::Mat kernel = (cv::Mat_<double>(3, 3) <<  0, -1,  0,
+                                                -1,  5, -1,
+                                                 0, -1,  0);
+    cv::filter2D(this->imageMat, this->imageMat, -1, kernel);
+}
+
 void image::save(void) {
     cv::imwrite(this->filename, this->imageMat);
 }
