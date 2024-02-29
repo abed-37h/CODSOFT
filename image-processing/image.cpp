@@ -34,6 +34,36 @@ void image::sharpen(void) {
     cv::filter2D(this->imageMat, this->imageMat, -1, kernel);
 }
 
+void image::adjustContrast(double alpha) {
+    adjustContrastAndBrightness(alpha, 0);
+}
+
+void image::adjustBrightness(int beta) {
+    adjustContrastAndBrightness(1, beta);
+}
+
+void image::adjustContrastAndBrightness(double alpha, int beta, double gamma) {
+    this->imageMat.convertTo(this->imageMat, -1, alpha, beta);
+    if (gamma) {
+        gammaCorrection(gamma);
+    }
+}
+
+void image::gammaCorrection(double gamma) {
+    cv::Mat lookup(1, 256, CV_8U);
+    uchar* p = lookup.ptr();
+
+    for (int i = 0; i < 256; i++) {
+        p[i] = cv::saturate_cast<uchar>(pow(i / 255.0, gamma) * 255.0);
+    }
+
+    cv::LUT(this->imageMat, lookup, this->imageMat);
+}
+
+void image::addFXColor(cv::ColormapTypes colorEffect) {
+    cv::applyColorMap(this->imageMat, this->imageMat, colorEffect);
+}
+
 void image::save(void) {
     cv::imwrite(this->filename, this->imageMat);
 }
