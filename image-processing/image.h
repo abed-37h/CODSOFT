@@ -18,6 +18,10 @@ public:
     void adjustContrastAndBrightness(double alpha, int beta, double gamma = 0);
     void gammaCorrection(double gamma);
     void addFXColor(cv::ColormapTypes colorEffect);
+    void crop(int startX, int startY, int width, int height);
+    void resize(int toWidth, int toHeight);
+    void scale(double scaleX, double scaleY);
+    void scale(double scaleXY);
     void save(void);
     bool saveAs(std::string filename);
 

@@ -64,6 +64,22 @@ void image::addFXColor(cv::ColormapTypes colorEffect) {
     cv::applyColorMap(this->imageMat, this->imageMat, colorEffect);
 }
 
+void image::crop(int startX, int startY, int width, int height) {
+    this->imageMat = this->imageMat(cv::Rect(startX, startY, width, height));
+}
+
+void image::resize(int toWidth, int toHeight) {
+    cv::resize(this->imageMat, this->imageMat, cv::Size(toWidth, toHeight));
+}
+
+void image::scale(double scaleX, double scaleY) {
+    cv::resize(this->imageMat, this->imageMat, cv::Size(), scaleX, scaleY);
+}
+
+void image::scale(double scaleXY) {
+    scale(scaleXY, scaleXY);
+}
+
 void image::save(void) {
     cv::imwrite(this->filename, this->imageMat);
 }
