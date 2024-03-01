@@ -14,9 +14,9 @@ bool image::load(std::string filename) {
     return true;
 }
 
-void image::display(void) const {
+char image::display(void) const {
     cv::imshow(this->filename, this->imageMat);
-    cv::waitKey(0);
+    return cv::waitKey(0);
 }
 
 void image::convert2GrayScale(void) {
