@@ -30,10 +30,29 @@ void taskList::viewTaskList(void) const {
     std::cout << "\n";
 }
 
-void taskList::complete(unsigned int taskId) {
-    this->tasks[taskId].complete();
+bool taskList::viewItem(unsigned int taskId) {
+    if (this->tasks.find(taskId) == this->tasks.end()) {
+        return false;
+    }
+
+    this->tasks[taskId].viewDetails();
+    return true;
 }
 
-void taskList::remove(unsigned int taskId) {
+bool taskList::complete(unsigned int taskId) {
+    if (this->tasks.find(taskId) == this->tasks.end()) {
+        return false;
+    }
+
+    this->tasks[taskId].complete();
+    return true;
+}
+
+bool taskList::remove(unsigned int taskId) {
+    if (this->tasks.find(taskId) == this->tasks.end()) {
+        return false;
+    }
+
     this->tasks.erase(taskId);
+    return true;
 }

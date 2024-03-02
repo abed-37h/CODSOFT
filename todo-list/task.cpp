@@ -52,14 +52,22 @@ bool task::isCompleted(void) const {
 }
 
 void task::display(void) const {
-    unsigned int ID_LENGTH = 4;
-    unsigned int DESCRIPTION_LENGTH = 40;
-    unsigned int DATE_LENGTH = 20;
-    unsigned int STATUS_LENGTH = 10;
+    const unsigned int ID_LENGTH = 4;
+    const unsigned int DESCRIPTION_LENGTH = 40;
+    const unsigned int DATE_LENGTH = 20;
+    const unsigned int STATUS_LENGTH = 10;
 
     std::cout << std::left 
         << std::setw(ID_LENGTH) << this->id << "|"
-        << std::setw(DESCRIPTION_LENGTH) << this->description << "|"
+        << std::setw(DESCRIPTION_LENGTH) << (this->description.length() > DESCRIPTION_LENGTH 
+        ? this->description.substr(0, DESCRIPTION_LENGTH - 3) + "..." : this->description) << "|"
         << std::setw(DATE_LENGTH) << (this->dueDated ? this->dueDate.toString() : "N/A") << "|"
         << std::setw(STATUS_LENGTH) << (this->completed ? "Completed" : "Pending") << "\n";
+}
+
+void task::viewDetails(void) const {
+    std::cout << "Task ID: " << this->id << "\n"
+        << "Description: " << this->description << "\n"
+        << "Due Date: " << (this->dueDated ? this->dueDate.toString() : "N/A") << "\n"
+        << "Status: " << (this->completed ? "Completed" : "Pending") << "\n\n";
 }

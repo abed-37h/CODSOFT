@@ -15,6 +15,7 @@ public:
     unsigned int getId(void) const;
     bool isCompleted(void) const;
     void display(void) const;
+    void viewDetails(void) const;
 private:
     static unsigned int _id;
     unsigned int id;

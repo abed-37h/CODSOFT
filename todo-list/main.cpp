@@ -18,6 +18,7 @@ int main() {
             << "\tadd '{description}' [due_date]\n"
             << "\tcomplete {task_id}\n"
             << "\tremove {task_id}\n"
+            << "\tview {task_id}\n"
             << "\texit\n"
             << "\n$ ";
 
@@ -63,6 +64,27 @@ int main() {
             unsigned int taskId;
             std::cin >> taskId;
             myTaskList.remove(taskId);
+        }
+
+        else if (command == "view") {
+            unsigned int taskId;
+            std::cin >> taskId;
+
+            while (true) {
+                system("clear");
+                myTaskList.viewItem(taskId);
+
+                std::cout << "Commands:\n"
+                    << "\tback\n"
+                    << "# ";
+                std::cin >> command;
+                if (command == "back") {
+                    break;
+                }
+
+                std::cerr << "Invalid command\n";
+                std::this_thread::sleep_for(std::chrono::milliseconds(DELAY));
+            }
         }
 
         else if (command == "exit") {

@@ -8,8 +8,9 @@ class taskList {
 public:
     void add(task& t);
     void viewTaskList(void) const;
-    void complete(unsigned int taskId);
-    void remove(unsigned int taskId);
+    bool viewItem(unsigned int taskId);
+    bool complete(unsigned int taskId);
+    bool remove(unsigned int taskId);
 private:
     std::map<unsigned int, task> tasks;
 };
