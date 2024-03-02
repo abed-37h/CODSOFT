@@ -1,9 +1,12 @@
 #include <iostream>
+#include <sstream>
 #include <chrono>
 #include <thread>
 #include "taskList.h"
 
 int main() {
+    const int DELAY = 1000;
+
     taskList myTaskList;
     while (true) {
         system("clear");
@@ -12,20 +15,42 @@ int main() {
         myTaskList.viewTaskList();
 
         std::cout << "Commands:\n"
-            << "\tadd {description}\n"
+            << "\tadd '{description}' [due_date]\n"
             << "\tcomplete {task_id}\n"
             << "\tremove {task_id}\n"
             << "\texit\n"
             << "\n$ ";
-        
+
         std::string command;
-        std:: cin >> command;
+        std::cin >> command;
         
         if (command == "add") {
-            std::string description;
-            std::getline(std::cin, description);
-            task t(description);
-            myTaskList.add(t);
+            std::string description = "";
+            Date dueDate;
+            
+            char ch;
+            std::cin >> ch;
+
+            std::getline(std::cin, description, ch);
+
+            if (std::cin.peek() == ' ') ch = std::getchar();
+
+            if (isdigit(std::cin.peek())) {
+                std::cin >> dueDate;
+                try {
+                    task t(description, dueDate);
+                    myTaskList.add(t);
+                }
+                catch(const std::exception& e) {
+                    std::cerr << e.what() << '\n';
+                    std::this_thread::sleep_for(std::chrono::milliseconds(DELAY));
+                }
+                
+            }
+            else {
+                task t(description);
+                myTaskList.add(t);
+            }
         }
 
         else if (command == "complete") {
@@ -45,8 +70,10 @@ int main() {
         }
 
         else {
-            std::cout << "Invalid command\n";
-            std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+            std::cerr << "Invalid command\n";
+            std::this_thread::sleep_for(std::chrono::milliseconds(DELAY));
         }
+        
+        std::cin.ignore(100, '\n');
     }
 }
