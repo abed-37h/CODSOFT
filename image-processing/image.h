@@ -11,7 +11,7 @@ public:
     bool load(std::string filename);
     char display(void) const;
     void convert2GrayScale(void);
-    void blur(int d, int sigma = 0);
+    void blur(void);
     void sharpen(void);
     void adjustContrastAndBrightness(void);
     void addFXColor(cv::ColormapTypes colorEffect);

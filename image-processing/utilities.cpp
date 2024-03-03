@@ -1,22 +1,5 @@
 #include "utilities.h"
 
-void blur(image& img) {
-    int d, sigma;
-
-    std::cout << "Diameter: ";
-    std::cin >> d;
-
-    std::cout << "Sigma: ";
-    std::cin >> sigma;
-
-    if (sigma < 1) {
-        img.blur(d);
-    }
-    else {
-        img.blur(d, sigma);
-    }
-}
-
 void fxColor(image& img) {
     std::cout << "FX Options: \n"
         << "\t01: Autumn\n"

@@ -33,7 +33,7 @@ int main(int argc, char** argv) {
 
         switch (option) {
             case 'g': img.convert2GrayScale(); break;
-            case 'b': blur(img); break;
+            case 'b': img.blur(); break;
             case 'h': img.sharpen(); break;
             case 'j': img.adjustContrastAndBrightness(); break;
             case 'f': fxColor(img); break;

@@ -25,8 +25,10 @@ void image::convert2GrayScale(void) {
     cv::cvtColor(this->imageMat, this->imageMat, cv::COLOR_BGR2GRAY);
 }
 
-void image::blur(int d, int sigma) {
-    cv::GaussianBlur(this->imageMat, this->imageMat, cv::Size(d, d), sigma, sigma);
+void image::blur(void) {
+    cv::destroyWindow(this->filename);
+    helper::blurHelper(this->imageMat, this->filename);
+    cv::namedWindow(this->filename, cv::WINDOW_AUTOSIZE);
 }
 
 void image::sharpen(void) {

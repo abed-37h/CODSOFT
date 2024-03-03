@@ -19,9 +19,15 @@ void helper::onGammaTrack(int, void*) {
     cv::imshow(winName, dst);
 }
 
+void helper::onBlurTrack(int, void *) {
+    int diameter = 6 * sigma + 1;
+    cv::GaussianBlur(src, dst, cv::Size(diameter, diameter), sigma, sigma);
+    cv::imshow(winName, dst);
+}
+
 void helper::adjustHelper(cv::Mat& src_, std::string filename) {
     src = src_.clone();
-    winName = "Adjust Contrast and Brightness" + filename;
+    winName = "[Adjust Contrast and Brightness] " + filename;
     alpha = beta = gamma = 100;
 
     cv::namedWindow(winName, cv::WINDOW_AUTOSIZE);
@@ -33,6 +39,25 @@ void helper::adjustHelper(cv::Mat& src_, std::string filename) {
     onAlphaBetaTrack(0, 0);
     onGammaTrack(0, 0);
     
+    char key = cv::waitKey(0);
+
+    if (key == 'p') {
+        src_ = dst.clone();
+    }
+    cv::destroyWindow(winName);
+}
+
+void helper::blurHelper(cv::Mat& src_, std::string filename) {
+    src = src_.clone();
+    winName = "[Blur] " + filename;
+    sigma = 0;
+
+    cv::namedWindow(winName, cv::WINDOW_AUTOSIZE);
+
+    cv::createTrackbar("Blur", winName, &sigma, 10, onBlurTrack);
+
+    onBlurTrack(0, 0);
+
     char key = cv::waitKey(0);
 
     if (key == 'p') {
