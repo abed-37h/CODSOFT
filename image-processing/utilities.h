@@ -2,7 +2,6 @@
 #include "image.h"
 
 void blur(image& img);
-void adjustContrastAndBrightness(image& img);
 void fxColor(image& img);
 void crop(image& img);
 void resize(image& img);

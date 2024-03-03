@@ -17,19 +17,6 @@ void blur(image& img) {
     }
 }
 
-void adjustContrastAndBrightness(image &img) {
-    int alpha, beta, gamma;
-
-    std::cout << "Contrast (1 == no-change): ";
-    std::cin >> alpha;
-
-    std::cout << "Brightness (0 == no-change): ";
-    std::cin >> beta;
-
-    std::cout << "Correction (0 == no-change): ";
-    std::cin >> gamma;
-}
-
 void fxColor(image& img) {
     std::cout << "FX Options: \n"
         << "\t01: Autumn\n"

@@ -35,7 +35,7 @@ int main(int argc, char** argv) {
             case 'g': img.convert2GrayScale(); break;
             case 'b': blur(img); break;
             case 'h': img.sharpen(); break;
-            case 'j': adjustContrastAndBrightness(img); break;
+            case 'j': img.adjust(); break;
             case 'f': fxColor(img); break;
             case 'c': crop(img); break;
             case 'r': resize(img); break;
