@@ -49,24 +49,6 @@ void fxColor(image& img) {
     img.addFXColor(static_cast<cv::ColormapTypes>(colorEffect - 1));
 }
 
-void crop(image& img) {
-    int startX, startY, width, height;
-    
-    std::cout << "Start X: ";
-    std::cin >> startX;
-    
-    std::cout << "start Y: ";
-    std::cin >> startY;
-    
-    std::cout << "Width: ";
-    std::cin >> width;
-    
-    std::cout << "Height: ";
-    std::cin >> height;
-
-    img.crop(startX, startY, width, height);
-}
-
 void resize(image& img) {
     int newWidth, newHeight;
 

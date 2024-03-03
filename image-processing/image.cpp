@@ -46,8 +46,17 @@ void image::addFXColor(cv::ColormapTypes colorEffect) {
     cv::applyColorMap(this->imageMat, this->imageMat, colorEffect);
 }
 
-void image::crop(int startX, int startY, int width, int height) {
-    this->imageMat = this->imageMat(cv::Rect(startX, startY, width, height));
+void image::crop(void) {
+    std::string winName = "[Crop] " + this->filename;
+
+    cv::destroyWindow(this->filename);
+    cv::namedWindow(winName, cv::WINDOW_AUTOSIZE);
+
+    cv::Rect roi = cv::selectROI(winName, this->imageMat, false);
+    if (!roi.empty()) this->imageMat = this->imageMat(roi);
+
+    cv::destroyWindow(winName);
+    cv::namedWindow(this->filename, cv::WINDOW_AUTOSIZE);
 }
 
 void image::resize(int toWidth, int toHeight) {

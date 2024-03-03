@@ -15,7 +15,7 @@ public:
     void sharpen(void);
     void adjustContrastAndBrightness(void);
     void addFXColor(cv::ColormapTypes colorEffect);
-    void crop(int startX, int startY, int width, int height);
+    void crop(void);
     void resize(int toWidth, int toHeight);
     void scale(double scaleX, double scaleY);
     void scale(double scaleXY);
