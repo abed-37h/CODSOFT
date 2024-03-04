@@ -4,6 +4,8 @@
 #include <opencv2/opencv.hpp>
 #include <string>
 #include <unordered_map>
+#include <vector>
+#include <utility>
 
 class image {
 public:
@@ -23,6 +25,9 @@ public:
     bool saveAs(std::string filename);
 
 private:
+    void onKeyPress(std::vector<std::pair<cv::TrackbarCallback, int>> callbacksV);
+    static void flipWindows(std::string toDestroy, std::string toCreate);
+
     static void onAlphaBetaTrack(int, void*);
     static void onGammaTrack(int, void*);
     static void onBlurTrack(int, void*);

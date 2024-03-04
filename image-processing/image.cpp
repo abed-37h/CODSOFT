@@ -70,28 +70,19 @@ void image::convert2GrayScale(void) {
 }
 
 void image::blur(void) {
-    cv::destroyWindow(this->filename);
     src = this->imageMat.clone();
-    winName = "[Blur] " + this->filename;
     sigma = 0;
 
-    cv::namedWindow(winName, cv::WINDOW_AUTOSIZE);
+    winName = "[Blur] " + this->filename;
+    flipWindows(this->filename, winName);
+
     cv::createTrackbar("Blur", winName, &sigma, 10, onBlurTrack);
 
-    int key;
-    do {
-        onBlurTrack(0, 0);
-
-        key = cv::waitKey(0);
-
-        if (key == ENTER || key == SPACE) {
-            this->imageMat = dst.clone();
-            break;
-        }
-    } while (key != ESCAPE && key != CANCEL);
+    onKeyPress({
+        std::make_pair(onBlurTrack, 0)
+    });
     
-    cv::destroyWindow(winName);
-    cv::namedWindow(this->filename, cv::WINDOW_AUTOSIZE);
+    flipWindows(winName, this->filename);
 }
 
 void image::sharpen(void) {
@@ -102,126 +93,87 @@ void image::sharpen(void) {
 }
 
 void image::adjustContrastAndBrightness(void) {
-    cv::destroyWindow(this->filename);
     src = this->imageMat.clone();
-    winName = "[Adjust Contrast and Brightness] " + this->filename;
     alpha = beta = gamma = 100;
 
-    cv::namedWindow(winName, cv::WINDOW_AUTOSIZE);
+    winName = "[Adjust Contrast and Brightness] " + this->filename;
+    flipWindows(this->filename, winName);
+
     cv::createTrackbar("Contrast", winName, &alpha, 500, onAlphaBetaTrack);
     cv::createTrackbar("Brightness", winName, &beta, 200, onAlphaBetaTrack);
     cv::createTrackbar("Correction", winName, &gamma, 200, onGammaTrack);
     
-    int key;
-    do {
-        onAlphaBetaTrack(0, 0);
-        onGammaTrack(0, 0);
+    onKeyPress({
+        std::make_pair(onAlphaBetaTrack, 0),
+        std::make_pair(onGammaTrack, 0)
+    });
 
-        key = cv::waitKey(0);
-
-        if (key == ENTER || key == SPACE) {
-            this->imageMat = dst.clone();
-            break;
-        }
-    } while (key != ESCAPE && key != CANCEL);
-
-    cv::destroyWindow(winName);
-    cv::namedWindow(this->filename, cv::WINDOW_AUTOSIZE);
+    flipWindows(winName, this->filename);
 }
 
 void image::addFXColor(void) {
-    cv::destroyWindow(this->filename);
     src = this->imageMat.clone();
-    winName = "[Add Color Fx] " + this->filename;
     colorEffect = 0;
 
-    cv::namedWindow(winName, cv::WINDOW_AUTOSIZE);
+    winName = "[Add Color Fx] " + this->filename;
+    flipWindows(this->filename, winName);
+
     cv::createTrackbar("Color FX", winName, &colorEffect, 22, onColorFXTrack);
 
-    int key;
-    do {
-        onColorFXTrack(0, 0);
-
-        key = cv::waitKey(0);
-
-        if (key == ENTER || key == SPACE) {
-            this->imageMat = dst.clone();
-            break;
-        }
-    } while (key != ESCAPE && key != CANCEL);
+    onKeyPress({
+        std::make_pair(onColorFXTrack, 0)
+    });
     
-    cv::destroyWindow(winName);
-    cv::namedWindow(this->filename, cv::WINDOW_AUTOSIZE);
+    flipWindows(winName, this->filename);
 }
 
 void image::crop(void) {
     std::string winName = "[Crop] " + this->filename;
-
-    cv::destroyWindow(this->filename);
-    cv::namedWindow(winName, cv::WINDOW_AUTOSIZE);
+    flipWindows(this->filename, winName);
 
     cv::Rect roi = cv::selectROI(winName, this->imageMat, false);
     if (!roi.empty()) this->imageMat = this->imageMat(roi);
 
-    cv::destroyWindow(winName);
-    cv::namedWindow(this->filename, cv::WINDOW_AUTOSIZE);
+    flipWindows(winName, this->filename);
 }
 
 void image::resize(void) {
-    cv::destroyWindow(this->filename);
     src = this->imageMat.clone();
-    winName = "[Resize] " + this->filename;
     width = this->imageMat.cols;
     height = this->imageMat.rows;
 
-    cv::namedWindow(winName, cv::WINDOW_AUTOSIZE);
+    winName = "[Resize] " + this->filename;
+    flipWindows(this->filename, winName);
+
     cv::resizeWindow(winName, cv::Size(2 * src.cols, 2 * src.rows));
 
     cv::createTrackbar("New Width", winName, &width, 1000, onResizeTrack);
     cv::createTrackbar("New Height", winName, &height, 1000, onResizeTrack);
 
-    int key;
-    do {
-        onResizeTrack(this->imageMat.cols, 0);
-        onResizeTrack(this->imageMat.rows, 0);
-
-        key = cv::waitKey(0);
-
-        if (key == ENTER || key == SPACE) {
-            this->imageMat = dst.clone();
-            break;
-        }
-    } while (key != ESCAPE && key != CANCEL);
+    onKeyPress({
+        std::make_pair(onResizeTrack, this->imageMat.cols),
+        std::make_pair(onResizeTrack, this->imageMat.rows)
+    });
     
-    cv::destroyWindow(winName);
-    cv::namedWindow(this->filename, cv::WINDOW_AUTOSIZE);
+    flipWindows(winName, this->filename);
 }
 
 void image::scale(void) {
-    cv::destroyWindow(this->filename);
     src = this->imageMat.clone();
-    winName = "[Scale] " + this->filename;
     scaleXY = 100;
+    
+    winName = "[Scale] " + this->filename;
+    flipWindows(this->filename, winName);
 
-    cv::namedWindow(winName, cv::WINDOW_AUTOSIZE);
     cv::resizeWindow(winName, cv::Size(2 * src.cols, 2 * src.rows));
 
     cv::createTrackbar("Scale (in %)", winName, &scaleXY, 200, onScaleTrack);
 
-    int key;
-    do {
-        onScaleTrack(100, 0);
-
-        key = cv::waitKey(0);
-
-        if (key == ENTER || key == SPACE) {
-            this->imageMat = dst.clone();
-            break;
-        }
-    } while (key != ESCAPE && key != CANCEL);
+    onKeyPress({
+        std::make_pair(onScaleTrack, 100)
+    });
     
-    cv::destroyWindow(winName);
-    cv::namedWindow(this->filename, cv::WINDOW_AUTOSIZE);
+    flipWindows(winName, this->filename);
 }
 
 void image::save(void) {
@@ -237,7 +189,29 @@ bool image::saveAs(std::string filename) {
     return true;
 }
 
-void image::onAlphaBetaTrack(int, void*) {
+void image::onKeyPress(std::vector<std::pair<cv::TrackbarCallback, int>> callbacksV) {
+    int key;
+    do {
+        for (auto&& [callback, n] : callbacksV) {
+            callback(n, 0);
+        }
+
+        key = cv::waitKey(0);
+
+        if (key == ENTER || key == SPACE) {
+            this->imageMat = dst.clone();
+            break;
+        }
+    } while (key != ESCAPE && key != CANCEL);
+}
+
+void image::flipWindows(std::string toDestroy, std::string toCreate) {
+    cv::destroyWindow(toDestroy);
+    cv::namedWindow(toCreate, cv::WINDOW_AUTOSIZE);
+}
+
+void image::onAlphaBetaTrack(int, void *)
+{
     src.convertTo(dst, -1, alpha / 100.0, beta - 100);
     res = dst.clone();
     cv::imshow(winName, dst);
