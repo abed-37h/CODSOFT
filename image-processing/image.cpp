@@ -61,16 +61,16 @@ void image::crop(void) {
     cv::namedWindow(this->filename, cv::WINDOW_AUTOSIZE);
 }
 
-void image::resize(int toWidth, int toHeight) {
-    cv::resize(this->imageMat, this->imageMat, cv::Size(toWidth, toHeight));
+void image::resize(void) {
+    cv::destroyWindow(this->filename);
+    helper::resizeHelper(this->imageMat, this->filename);
+    cv::namedWindow(this->filename, cv::WINDOW_AUTOSIZE);
 }
 
-void image::scale(double scaleX, double scaleY) {
-    cv::resize(this->imageMat, this->imageMat, cv::Size(), scaleX, scaleY);
-}
-
-void image::scale(double scaleXY) {
-    scale(scaleXY, scaleXY);
+void image::scale(void) {
+    cv::destroyWindow(this->filename);
+    helper::scaleHelper(this->imageMat, this->filename);
+    cv::namedWindow(this->filename, cv::WINDOW_AUTOSIZE);
 }
 
 void image::save(void) {

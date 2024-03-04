@@ -16,9 +16,8 @@ public:
     void adjustContrastAndBrightness(void);
     void addFXColor(cv::ColormapTypes colorEffect);
     void crop(void);
-    void resize(int toWidth, int toHeight);
-    void scale(double scaleX, double scaleY);
-    void scale(double scaleXY);
+    void resize(void);
+    void scale(void);
     void save(void);
     bool saveAs(std::string filename);
 

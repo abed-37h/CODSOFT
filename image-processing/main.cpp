@@ -23,8 +23,7 @@ int main(int argc, char** argv) {
             << "\tadd Fx colors\n"
             << "\tCrop\n"
             << "\tResize\n"
-            << "\tscaLe (similar)\n"
-            << "\tscalE (separately)\n"
+            << "\tscaLe\n"
             << "\tSave\n"
             << "\tsaveAs\n"
             << "\teXit\n";
@@ -38,9 +37,8 @@ int main(int argc, char** argv) {
             case 'j': img.adjustContrastAndBrightness(); break;
             case 'f': fxColor(img); break;
             case 'c': img.crop(); break;
-            case 'r': resize(img); break;
-            case 'l': scale(img, true); break;
-            case 'e': scale(img, false); break;
+            case 'r': img.resize(); break;
+            case 'l': img.scale(); break;
             case 's': img.save(); break;
             case 'a': saveAs(img); break;
             case 'x': return 0;

@@ -32,40 +32,6 @@ void fxColor(image& img) {
     img.addFXColor(static_cast<cv::ColormapTypes>(colorEffect - 1));
 }
 
-void resize(image& img) {
-    int newWidth, newHeight;
-
-    std::cout << "New Width: ";
-    std::cin >> newWidth;
-    
-    std::cout << "New Height: ";
-    std::cin >> newHeight;
-
-    img.resize(newWidth, newHeight);
-}
-
-void scale(image& img, bool both) {
-    if (both) {
-        double scaleXY;
-        std::cout << "Scale: ";
-        std::cin >> scaleXY;
-
-        img.scale(scaleXY);
-    }
-
-    else {
-        double scaleX, scaleY;
-
-        std::cout << "Scale X: ";
-        std::cin >> scaleX;
-
-        std::cout << "Scale Y: ";
-        std::cin >> scaleY;
-
-        img.scale(scaleX, scaleY);
-    }
-}
-
 void saveAs(image& img) {
     std::string filename;
 
