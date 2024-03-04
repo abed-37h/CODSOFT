@@ -1,6 +1,11 @@
 #include <filesystem>
 #include "image.h"
 
+const int ENTER = 13;
+const int SPACE = ' ';
+const int ESCAPE = 27;
+const int CANCEL = 'c';
+
 std::string image::winName = "";
 cv::Mat image::src = cv::Mat();
 cv::Mat image::dst = cv::Mat();
@@ -71,16 +76,20 @@ void image::blur(void) {
     sigma = 0;
 
     cv::namedWindow(winName, cv::WINDOW_AUTOSIZE);
-
     cv::createTrackbar("Blur", winName, &sigma, 10, onBlurTrack);
 
-    onBlurTrack(0, 0);
+    int key;
+    do {
+        onBlurTrack(0, 0);
 
-    char key = cv::waitKey(0);
+        key = cv::waitKey(0);
 
-    if (key == 'p') {
-        this->imageMat = dst.clone();
-    }
+        if (key == ENTER || key == SPACE) {
+            this->imageMat = dst.clone();
+            break;
+        }
+    } while (key != ESCAPE && key != CANCEL);
+    
     cv::destroyWindow(winName);
     cv::namedWindow(this->filename, cv::WINDOW_AUTOSIZE);
 }
@@ -99,19 +108,23 @@ void image::adjustContrastAndBrightness(void) {
     alpha = beta = gamma = 100;
 
     cv::namedWindow(winName, cv::WINDOW_AUTOSIZE);
-
     cv::createTrackbar("Contrast", winName, &alpha, 500, onAlphaBetaTrack);
     cv::createTrackbar("Brightness", winName, &beta, 200, onAlphaBetaTrack);
     cv::createTrackbar("Correction", winName, &gamma, 200, onGammaTrack);
-
-    onAlphaBetaTrack(0, 0);
-    onGammaTrack(0, 0);
     
-    char key = cv::waitKey(0);
+    int key;
+    do {
+        onAlphaBetaTrack(0, 0);
+        onGammaTrack(0, 0);
 
-    if (key == 'p') {
-        this->imageMat = dst.clone();
-    }
+        key = cv::waitKey(0);
+
+        if (key == ENTER || key == SPACE) {
+            this->imageMat = dst.clone();
+            break;
+        }
+    } while (key != ESCAPE && key != CANCEL);
+
     cv::destroyWindow(winName);
     cv::namedWindow(this->filename, cv::WINDOW_AUTOSIZE);
 }
@@ -123,16 +136,20 @@ void image::addFXColor(void) {
     colorEffect = 0;
 
     cv::namedWindow(winName, cv::WINDOW_AUTOSIZE);
-
     cv::createTrackbar("Color FX", winName, &colorEffect, 22, onColorFXTrack);
 
-    onColorFXTrack(0, 0);
+    int key;
+    do {
+        onColorFXTrack(0, 0);
 
-    char key = cv::waitKey(0);
+        key = cv::waitKey(0);
 
-    if (key == 'p') {
-        this->imageMat = dst.clone();
-    }
+        if (key == ENTER || key == SPACE) {
+            this->imageMat = dst.clone();
+            break;
+        }
+    } while (key != ESCAPE && key != CANCEL);
+    
     cv::destroyWindow(winName);
     cv::namedWindow(this->filename, cv::WINDOW_AUTOSIZE);
 }
@@ -163,14 +180,19 @@ void image::resize(void) {
     cv::createTrackbar("New Width", winName, &width, 1000, onResizeTrack);
     cv::createTrackbar("New Height", winName, &height, 1000, onResizeTrack);
 
-    onResizeTrack(this->imageMat.cols, 0);
-    onResizeTrack(this->imageMat.rows, 0);
+    int key;
+    do {
+        onResizeTrack(this->imageMat.cols, 0);
+        onResizeTrack(this->imageMat.rows, 0);
 
-    char key = cv::waitKey(0);
+        key = cv::waitKey(0);
 
-    if (key == 'p') {
-        this->imageMat = dst.clone();
-    }
+        if (key == ENTER || key == SPACE) {
+            this->imageMat = dst.clone();
+            break;
+        }
+    } while (key != ESCAPE && key != CANCEL);
+    
     cv::destroyWindow(winName);
     cv::namedWindow(this->filename, cv::WINDOW_AUTOSIZE);
 }
@@ -186,13 +208,18 @@ void image::scale(void) {
 
     cv::createTrackbar("Scale (in %)", winName, &scaleXY, 200, onScaleTrack);
 
-    onScaleTrack(100, 0);
+    int key;
+    do {
+        onScaleTrack(100, 0);
 
-    char key = cv::waitKey(0);
+        key = cv::waitKey(0);
 
-    if (key == 'p') {
-        this->imageMat = dst.clone();
-    }
+        if (key == ENTER || key == SPACE) {
+            this->imageMat = dst.clone();
+            break;
+        }
+    } while (key != ESCAPE && key != CANCEL);
+    
     cv::destroyWindow(winName);
     cv::namedWindow(this->filename, cv::WINDOW_AUTOSIZE);
 }
