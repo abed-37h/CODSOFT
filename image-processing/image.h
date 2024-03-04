@@ -14,7 +14,7 @@ public:
     void blur(void);
     void sharpen(void);
     void adjustContrastAndBrightness(void);
-    void addFXColor(cv::ColormapTypes colorEffect);
+    void addFXColor(void);
     void crop(void);
     void resize(void);
     void scale(void);

@@ -35,6 +35,14 @@ void helper::onResizeTrack(int, void*) {
     cv::imshow(winName, dst);
 }
 
+void helper::onColorFXTrack(int, void*) {
+    if (colorEffect == 0) dst = src.clone();
+    else cv::applyColorMap(src, dst, static_cast<cv::ColormapTypes>(colorEffect - 1));
+    res = dst.clone();
+    cv::putText(res, colorMap.at(colorEffect), cv::Point(src.rows / 2.5, src.cols / 2), cv::FONT_HERSHEY_SIMPLEX, 1.0, cv::Scalar(0, 0, 0), 2);
+    cv::imshow(winName, res);
+}
+
 void helper::adjustHelper(cv::Mat& src_, std::string filename) {
     src = src_.clone();
     winName = "[Adjust Contrast and Brightness] " + filename;
@@ -110,6 +118,25 @@ void helper::resizeHelper(cv::Mat& src_, std::string filename) {
 
     onResizeTrack(src.cols, 0);
     onResizeTrack(src.rows, 0);
+
+    char key = cv::waitKey(0);
+
+    if (key == 'p') {
+        src_ = dst.clone();
+    }
+    cv::destroyWindow(winName);
+}
+
+void helper::colorFXHelper(cv::Mat& src_, std::string filename) {
+    src = src_.clone();
+    winName = "[Add Color Fx] " + filename;
+    colorEffect = 0;
+
+    cv::namedWindow(winName, cv::WINDOW_AUTOSIZE);
+
+    cv::createTrackbar("Color FX", winName, &colorEffect, 22, onColorFXTrack);
+
+    onColorFXTrack(0, 0);
 
     char key = cv::waitKey(0);
 

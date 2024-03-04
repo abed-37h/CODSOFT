@@ -44,8 +44,10 @@ void image::adjustContrastAndBrightness(void) {
     cv::namedWindow(this->filename, cv::WINDOW_AUTOSIZE);
 }
 
-void image::addFXColor(cv::ColormapTypes colorEffect) {
-    cv::applyColorMap(this->imageMat, this->imageMat, colorEffect);
+void image::addFXColor(void) {
+    cv::destroyWindow(this->filename);
+    helper::colorFXHelper(this->imageMat, this->filename);
+    cv::namedWindow(this->filename, cv::WINDOW_AUTOSIZE);
 }
 
 void image::crop(void) {
