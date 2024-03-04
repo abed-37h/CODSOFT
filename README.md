@@ -36,7 +36,7 @@ For the image processing tool:
     set(CMAKE_CXX_STANDARD_REQUIRED ON)
     find_package(OpenCV REQUIRED)
     include_directories(${OpenCV_INCLUDE_DIRS})
-    set(SOURCE_FILES image.cpp helper.cpp main.cpp)
+    set(SOURCE_FILES image.cpp main.cpp)
     add_executable(<program-name> ${SOURCE_FILES})
     target_link_libraries(<program-name> ${OpenCV_LIBS})
     ```
